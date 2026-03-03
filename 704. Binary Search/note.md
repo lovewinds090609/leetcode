@@ -23,7 +23,7 @@
 
 ---
 
-## 我的解法
+## 解法一：閉區間 `[left, right]`
 
 ```python
 class Solution:
@@ -38,6 +38,32 @@ class Solution:
                 return middle
             else:
                 right = middle - 1
+
+        return -1
+```
+
+---
+
+## 解法二：左閉右開區間 `[left, right)`
+
+`right = len(nums)`（右邊界本身不合法），因此：
+- 迴圈條件改為 `left < right`（`left == right` 時區間為空）
+- 向左縮時 `right = middle`（不是 `middle - 1`，因為 right 本身不在搜尋範圍內）
+
+```python
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums)  # 右開，不包含
+
+        while left < right:
+            middle = left + ((right - left) // 2)
+            if target > nums[middle]:
+                left = middle + 1
+            elif target < nums[middle]:
+                right = middle  # 不是 middle - 1
+            else:
+                return middle
 
         return -1
 ```
