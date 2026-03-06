@@ -12,20 +12,31 @@ class Solution:
         
         x,y = 0,0
 
-        for i in range(n * n):
-            while right:
-                if(matrix[y][x] != 0):
-                    right = False
-                    down = True
-                if(x == n):
+        for i in range(1, n * n + 1):
+            matrix[y][x] = i  # 先寫
+            if right:
+                if x + 1 >= n or matrix[y][x+1] != 0:  # 看下一格
+                    right, down = False, True
+                    y += 1   # 轉向後的起始位移
+                else:
+                    x += 1
+            elif down:
+                if y + 1 >= n or matrix[y+1][x] != 0:
+                    down, left = False, True
                     x -= 1
                 else:
-                    x += 1    
-                
-            while down:
-
-            while left:
-
-            while up:
+                    y += 1  
+            elif left:
+                if x - 1 < 0 or matrix[y][x-1] != 0:
+                    left, up = False, True
+                    y -= 1
+                else:
+                    x -= 1
+            elif up:
+                if y - 1 < 0 or matrix[y-1][x] != 0:
+                    up, right = False, True
+                    x += 1
+                else:
+                    y -= 1
 
         return matrix
